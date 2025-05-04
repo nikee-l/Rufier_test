@@ -25,3 +25,7 @@ years_le_text = "0"
 f_test_le_text = "0"
 s_test_le_text = "0"
 thr_test_le_text = "0"
+
+#third win
+final_result_text = "Індекс Руф'є: "
+description_text = "Працездатність сердця: "

@@ -1,6 +1,6 @@
 from inst import*
 from PyQt5.QtWidgets import*
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer, QTime
 from PyQt5.QtGui import*
 from final_win import*
 
@@ -11,10 +11,12 @@ class TestWin(QWidget):
         self.initUI()
         self.connects()
         self.show()
+
     def set_appear(self):
         self.setWindowTitle(txt_title2)
         self.resize(win_width, win_height)
         self.move(win_x, win_y)
+
     def initUI(self):
         self.h_line = QHBoxLayout() 
         self.r_line = QVBoxLayout()
@@ -27,6 +29,7 @@ class TestWin(QWidget):
         self.timer = QLabel(timer_text)
         self.timer.setFont(QFont("Arial", 45))
         self.f_test_btn = QPushButton(f_test_btn_text)
+        self.f_test_btn.clicked.connect(self.first_timer_init)
         self.s_test_btn = QPushButton(s_test_btn_text)
         self.thr_test_btn = QPushButton(thr_test_btn_text)
         self.nxt_win_btn = QPushButton(nxt_win_btn_text)
@@ -61,6 +64,24 @@ class TestWin(QWidget):
 
     def connects(self):
         self.nxt_win_btn.clicked.connect(self.next_click)
+
     def next_click(self):
         self.hide()
-        self.thv = FinalWin()
+        self.thw = FinalWin()
+
+    def first_timer_init(self):
+        global time
+        time = QTime(0, 1, 0)
+        self.timer_obg = QTimer()
+        self.timer_obg.timeout.connect(self.timer1Event)
+        self.timer_obg.start(1000)
+    
+    def timer1Event(self):
+        global time 
+        time = time.addSecs(-1)
+        self.timer.setText(time.toString("hh:mm:ss"))
+        self.timer.setFont(QFont("Arial", 45, QFont.Bold))
+        self.timer.setStyleSheet("color: rgb(36, 100, 227)")
+        if time == QTime(0, 0, 0):
+            self.timer_obg.stop()
+        
