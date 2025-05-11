@@ -31,7 +31,9 @@ class TestWin(QWidget):
         self.f_test_btn = QPushButton(f_test_btn_text)
         self.f_test_btn.clicked.connect(self.first_timer_init)
         self.s_test_btn = QPushButton(s_test_btn_text)
+        self.s_test_btn.clicked.connect(self.second_timer_init)
         self.thr_test_btn = QPushButton(thr_test_btn_text)
+        self.thr_test_btn.clicked.connect(self.third_timer_init)
         self.nxt_win_btn = QPushButton(nxt_win_btn_text)
         self.pib_le = QLineEdit(pib_le_text)
         self.years_le = QLineEdit(years_le_text)
@@ -67,11 +69,11 @@ class TestWin(QWidget):
 
     def next_click(self):
         self.hide()
-        self.thw = FinalWin()
+        self.thw = FinalWin(self.years_le.text(), self.f_test_le.text(), self.s_test_le.text(), self.thr_test_le.text())
 
     def first_timer_init(self):
         global time
-        time = QTime(0, 1, 0)
+        time = QTime(0, 0, 15)
         self.timer_obg = QTimer()
         self.timer_obg.timeout.connect(self.timer1Event)
         self.timer_obg.start(1000)
@@ -80,8 +82,44 @@ class TestWin(QWidget):
         global time 
         time = time.addSecs(-1)
         self.timer.setText(time.toString("hh:mm:ss"))
-        self.timer.setFont(QFont("Arial", 45, QFont.Bold))
+        self.timer.setFont(QFont("Times New Roman", 45, QFont.Bold))
         self.timer.setStyleSheet("color: rgb(36, 100, 227)")
         if time == QTime(0, 0, 0):
             self.timer_obg.stop()
-        
+    
+    def second_timer_init(self):
+        global time
+        time = QTime(0, 0, 45)
+        self.timer_obg = QTimer()
+        self.timer_obg.timeout.connect(self.timer2Event)
+        self.timer_obg.start(1000)
+
+    def timer2Event(self):
+        global time 
+        time = time.addSecs(-1)
+        self.timer.setText(time.toString("hh:mm:ss"))
+        self.timer.setFont(QFont("Times New Roman", 45, QFont.Bold))
+        self.timer.setStyleSheet("color: rgb(60, 222, 71)")
+        if time == QTime(0, 0, 0):
+            self.timer_obg.stop()
+
+    def third_timer_init(self):
+        global time
+        time = QTime(0, 1, 0)
+        self.timer_obg = QTimer()
+        self.timer_obg.timeout.connect(self.timer3Event)
+        self.timer_obg.start(1000)
+
+    def timer3Event(self):
+        global time 
+        time = time.addSecs(-1)
+        self.timer.setText(time.toString("hh:mm:ss"))
+        self.timer.setFont(QFont("Times New Roman", 45, QFont.Bold))
+        if time >= QTime(0, 0, 45):
+            self.timer.setStyleSheet("color: rgb(247, 24, 2)")
+        elif time <= QTime(0, 0, 15):
+            self.timer.setStyleSheet("color: rgb(235, 136, 127)")
+        else:
+            self.timer.setStyleSheet("color: rgb(222, 74, 60)")
+        if time == QTime(0, 0, 0):
+            self.timer_obg.stop()

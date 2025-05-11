@@ -4,7 +4,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import*
 
 class FinalWin(QWidget):
-    def __init__(self):
+    def __init__(self, age, t1, t2, t3):
+        self.age = age
+        self.t1 = t1
+        self.t2 = t2
+        self.t3 = t3
         super().__init__()
         self.set_appear()
         self.initUI()
@@ -22,3 +26,6 @@ class FinalWin(QWidget):
         self.c_line.addWidget(self.result_ladel, alignment=Qt.AlignCenter)
         self.c_line.addWidget(self.description, alignment=Qt.AlignCenter)
         self.setLayout(self.c_line)
+
+    def calculate_result(self):
+        pass
